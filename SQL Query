@@ -1,0 +1,16 @@
+SELECT * FROM `first-sql-project-77393.sales.Sales Transaction ` 
+
+--Remove all duplicate
+--Remove all Returned items listed as a negative vale under quantity
+
+SELECT DISTINCT   TransactionNo, Date, ProductNo, ProductName, Price, Quantity, CustomerNo, Country,
+FROM `first-sql-project-77393.sales.Sales Transaction `
+order by quantity ASC
+limit 531150 offset 8548;
+
+-- calculate total sales  (price x quantity) Added a total sales column
+
+SELECT DISTINCT   TransactionNo, Date, ProductNo, ProductName, Price, Quantity, CustomerNo, Country, (price * quantity) as Total_Sales
+FROM `first-sql-project-77393.sales.Sales Transaction `
+order by quantity ASC
+limit 531150 offset 8548;
