@@ -1,0 +1,57 @@
+SELECT * FROM `first-sql-project-77393.sales.Sales_Transaction_Clean`;
+
+--How was the sales trend over the months?
+
+SELECT FORMAT_TIMESTAMP('%y-%m', timestamp(date))  AS month,
+SUM(Total_Sales) AS Total_sales
+ FROM `first-sql-project-77393.sales.Sales_Transaction_Clean`
+ Group by month
+ order by month;
+
+--What are the most frequently purchased products?
+
+SELECT ProductNo, ProductName, Sum(Quantity) AS total_purchases
+ FROM `first-sql-project-77393.sales.Sales_Transaction_Clean`
+ GROUP BY ProductNo, ProductName
+ ORDER BY total_purchases DESC
+ LIMIT 10;
+
+ --How many products does the customer purchase in each transaction? 
+
+ 
+ SELECT TransactionNo, ProductName, 
+ SUM(quantity) AS total_products_purchased  
+FROM `first-sql-project-77393.sales.Sales_Transaction_Clean` 
+Group by 
+TransactionNo, ProductName 
+ORDER BY 
+TransactionNo;
+
+ --On average how many products does the customer purchase in each transaction?
+
+SELECT AVG(Quantity) AS avg_products_per_transaction 
+FROM(
+  SELECT 
+ TransactionNo,
+ SUM(Quantity) AS total_products_purchased  
+FROM `first-sql-project-77393.sales.Sales_Transaction_Clean` 
+Group by 
+TransactionNo);
+
+--What are the most profitable segment customers?
+
+SELECT CustomerNo, Country, ProductName, Sum(Quantity) AS total_purchases
+ FROM `first-sql-project-77393.sales.Sales_Transaction_Clean`
+ GROUP BY Country,CustomerNo, ProductName
+ ORDER BY total_purchases DESC
+ LIMIT 10;
+
+--What are the most profitable segment customers?
+
+SELECT country,
+    SUM(Total_Sales) AS total_profit
+FROM `first-sql-project-77393.sales.Sales_Transaction_Clean`
+GROUP BY 
+    country
+ORDER BY 
+    total_profit DESC;
